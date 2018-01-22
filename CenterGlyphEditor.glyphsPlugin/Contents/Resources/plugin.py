@@ -96,7 +96,7 @@ class CenterGlyphEditor(GeneralPlugin):
     # use the foreground drawing loop hook to check if metrics updates are required
     def keepGlyphCenter(self, layer, info):
         tab = Glyphs.fonts[0].currentTab
-        tool = tab.graphicView().window().windowController().toolDrawDelegate()
+        tool = Glyphs.currentDocument.windowController().toolDrawDelegate()
 
         # if there are no nodes nor components in the layer (e.g. it is empty)
         # don't try to center
@@ -104,7 +104,7 @@ class CenterGlyphEditor(GeneralPlugin):
             return
 
         # only center for certain tools (i.e. not for annotation, and text tool has it's own jump to cursor)
-        if type(tool).__name__ not in ["GlyphsToolSelect", "PenTool", "GlyphsToolRotate", "GlyphsToolScale", "GlyphsToolTrueTypeInstructor"]:
+        if tool.__class__.__name__ not in ["GlyphsToolSelect", "PenTool", "GlyphsToolRotate", "GlyphsToolScale", "GlyphsToolTrueTypeInstructor"]:
             return
 
         # Only trigger an update when a new glyph is selected
